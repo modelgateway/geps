@@ -1,5 +1,5 @@
 ---
-MEP: 5
+GEP: 5
 Title: Fallback & Load Balancing
 Discussion: Link
 Implementation: Link
