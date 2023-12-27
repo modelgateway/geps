@@ -13,8 +13,9 @@ To start a new proposal, you need to:
 
 ## Proposals
 
-| GEP                             | Title          |
-|---------------------------------|----------------|
-| [0001](./proposals/0001-gep.md) | Service Config |
+| GEP                                            | Title                |
+|------------------------------------------------|----------------------|
+| [0001](./proposals/0001-service-config.md)     | Service Config       |
+| [0004](./proposals/0004-release-deployment.md) | Release & Deployment |
 
 
