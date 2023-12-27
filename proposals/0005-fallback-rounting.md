@@ -35,8 +35,9 @@ WRR could be useful to perform **A/B testing** of model pool setup to find the b
 
 ### Requirements
 
-[TBU, list all key requirements to keep in mind, use https://datatracker.ietf.org/doc/html/rfc2119 verbs]
-- TBU 
+- R1: We MUST fallback to a healthy model if any in a pool doing our best to fulfill routing strategy specified in configs
+- R2: Fallback MUST be as quick as possible. No redundant retrying or waiting
+- 
 
 ## Design
 
@@ -54,3 +55,4 @@ TBU
 ## Future Work
 
 - Cost- and performance-based routing is out of scope for Glides MVP, but could be brought on later on
+- Streaming model responses & model that accept streaming input (e.g. STT models) are out of scope right now, but will be considered in the future 
