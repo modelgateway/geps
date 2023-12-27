@@ -15,5 +15,6 @@ To start a new proposal, you need to:
 
 | GEP                             | Title          |
 |---------------------------------|----------------|
+| [0001](./proposals/0001-gep.md) | Service Config |
 
 

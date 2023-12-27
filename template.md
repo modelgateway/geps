@@ -17,7 +17,7 @@ Implementation: Link
 
 ### Requirements
 
-[TBU, list all key requirements to keep in mind]
+[TBU, list all key requirements to keep in mind, use https://datatracker.ietf.org/doc/html/rfc2119 verbs]
 
 ## Design
 
