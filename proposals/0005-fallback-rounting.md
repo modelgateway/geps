@@ -69,6 +69,67 @@ This is how Glide understands which should server the concreate request.
 
 TBU
 
+### Model Pool Config
+
+The config structure was already covered in [GEP0001](0001-gep.md), so in the GEP, let's just focus on the
+model pool config specifically:
+
+```YAML
+# some other configs...
+routes:
+  language:
+    - id: my-pool
+      enabled: true # # bool, true by default
+      strategy: priority # round-robin, weighted-round-robin, priority, least-latency, priority, etc.
+      models:
+        - id: openai-boring
+          enabled: true # bool, true by default
+          openai: # anthropic, azureopenai, gemini, other providers we support
+            model: gpt-3.5-turbo
+            api_key: ${env:OPENAI_API_KEY}
+            default_params:
+              temperature: 0
+```
+
+Notes:
+- The bare minimal setup must include one pool with at least one model. 
+  We don't require to setup more than one model to simplify gateway setup for users who just want to try it or experiment.
+  That's said we may want to show a warning that such kind of pool better have some redundancy to be more resilient to provider outages.
+- Each pool ID should have a unique name across other pools of this type (e.g. language pools)
+- Each model ID should be unique for the pool it's defined in
+- Pool and model definition include the "enabled" field to simplify disabling pools/models without a need to remove their definitions from the file
+
+### Pool API
+
+This could be useful to have an ability to inspect the current pool setup in case Glide users don't have access to the underlying gateway configuration (it's likely that gateway is deployed by the team that does't do LLM work directly, but rather helps with operations/engineering).
+
+In that case, Glide provides the following API (see GEP0002, for other API):
+
+```
+GET /v1/language/
+# This will return all enabled pools like:
+[
+  {
+    "id": "mypool",
+    "strategy": "priority",
+    "models": [
+      {
+        "id": "openai-boring",
+        "openai": {
+          "model": "gpt-3.5-turbo",
+          "api_key": "[REDACTED]",
+          "default_params": {
+            "temperature": 0
+          }
+        }
+      }
+    ]
+  }
+]
+```
+
+API keys and any other sensitive data is going to be redacted in this output.
+
 ### Testing
 
 TBU
