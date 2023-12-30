@@ -1,6 +1,6 @@
 ---
 GEP: 5
-Title: Fallback & Load Balancing
+Title: Fallback & Routing
 Discussion: Link
 Implementation: Link
 ---
@@ -36,17 +36,50 @@ WRR could be useful to perform **A/B testing** of model pool setup to find the b
 ### Requirements
 
 - R1: We MUST fallback to a healthy model if any in a pool doing our best to fulfill routing strategy specified in configs
-- R2: Fallback MUST be as quick as possible. No redundant retrying or waiting
-- 
+- R2: Fallback MUST be as quick as possible. No redundant wasteful retrying or waiting
 
 ## Design
 
-The trivial strategy to tackle this problem is redundancy. So we have some backup models to talk to in case the main one is down.
+The off-the-shelf strategy to tackle the availability issues is redundancy. 
+So we have some backup models to talk to in case the main one is down.
 The mechanism of switching models in case of failures is called fallbacking.
 
-## Testing
+For most serious production applications that have real users, downtime is not an option. Hence, fallbacking should be
+an intrinsic feature of Glide routing despite routing strategy.
+
+There may be exceptions to this dictated by the model nature. 
+For example, embedding API may require one model to be used for all embeddings produced.
+
+Based on this, we group all models we support into types (see GEP0002):
+
+- language models
+- embeddings
+- transcribers
+- speech synthesizers
+- etc.
+
+Each model type is represented as a list of model pools that could serve the incoming request uniformly.
+Each model pool is a list of models (along with their params & operational info like API key) and routing strategy that defines
+how incoming requests should be served.
+
+The model pool ID or name is exposed to clients and they use them during requests (see GEP0002). 
+This is how Glide understands which should server the concreate request.
+
+### Model Pools & Fallbacking
 
 TBU
+
+### Testing
+
+TBU
+
+## Model Pool Use Cases
+
+The model pool abstraction seems like a powerful idea that allows to do these things (not an exhaustive list):
+
+- Switch clients to a new pool with different setup in a backward-compatible manner (e.g. keeps the old pool in place, add a new one, switch the app to the new pool, remove the old one)
+- Serve several applications with different needs/usecases without a need to deploy another Glide cluster
+- 
 
 ## Alternatives Considered
 
@@ -54,5 +87,5 @@ TBU
 
 ## Future Work
 
-- Cost- and performance-based routing is out of scope for Glides MVP, but could be brought on later on
+- Cost- and performance-based routing is out of scope for Glide MVP, but could be brought on later on
 - Streaming model responses & model that accept streaming input (e.g. STT models) are out of scope right now, but will be considered in the future 
