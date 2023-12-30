@@ -63,7 +63,7 @@ Each model pool is a list of models (along with their params & operational info 
 how incoming requests should be served.
 
 The model pool ID or name is exposed to clients and they use them during requests (see GEP0002). 
-This is how Glide understands which should server the concreate request.
+This is how Glide understands which one should server the concreate request.
 
 ### Model Pools & Fallbacking
 
