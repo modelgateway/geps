@@ -153,6 +153,14 @@ The model pool abstraction seems like a powerful idea that allows to do these th
 - Switch clients to a new pool with different setup in a backward-compatible manner (e.g. keeps the old pool in place, add a new one, switch the app to the new pool, remove the old one)
 - Serve several applications with different needs/use cases without a need to deploy another Glide cluster
 
+### References
+
+- https://github.com/zehuamama/balancer/
+- https://github.com/yyyar/gobetween/tree/master/src/balance
+- https://github.com/mr-karan/balance/blob/main/balance.go
+- https://github.com/liangwt/wrr/blob/master/scheduler.go
+- https://github.com/hedzr/lb/blob/master/wrr/wrr.go
+
 ## Alternatives Considered
 
 [TBU, what other solutions were considered and why they were rejected]
